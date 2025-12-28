@@ -1,4 +1,4 @@
-import { mutation, query } from "./_generated/server";
+import { mutation, query, internalMutation } from "./_generated/server";
 import { v } from "convex/values";
 
 export const signup = mutation({
@@ -44,5 +44,12 @@ export const login = mutation({
         }
 
         return user._id;
+    },
+});
+
+export const fulfillPurchase = internalMutation({
+    args: { userId: v.id("users") },
+    handler: async (ctx, args) => {
+        await ctx.db.patch(args.userId, { isPremium: true });
     },
 });

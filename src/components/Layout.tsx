@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gamepad2, LogOut, User, Zap, Crown } from 'lucide-react';
+import { Gamepad2, LogOut, User, Crown } from 'lucide-react';
 import { useAction, useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
-import { Id } from '../../convex/_generated/dataModel';
+import type { Id } from '../../convex/_generated/dataModel';
 
 export const useAuth = () => {
     const [userId] = useState<Id<"users"> | null>(localStorage.getItem("userId") as Id<"users"> | null);

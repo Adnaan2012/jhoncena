@@ -1,14 +1,6 @@
 import { httpAction } from "./_generated/server";
-import { internalMutation } from "./_generated/server";
-import { v } from "convex/values";
+import { internal } from "./_generated/api";
 import Stripe from "stripe";
-
-export const fulfillPurchase = internalMutation({
-    args: { userId: v.id("users") },
-    handler: async (ctx, args) => {
-        await ctx.db.patch(args.userId, { isPremium: true });
-    },
-});
 
 export const stripeWebhook = httpAction(async (ctx, request) => {
     const stripeSecret = process.env.STRIPE_SECRET_KEY;
@@ -34,13 +26,12 @@ export const stripeWebhook = httpAction(async (ctx, request) => {
 
     if (event.type === "checkout.session.completed") {
         const session = event.data.object as Stripe.Checkout.Session;
-        const userId = session.metadata?.userId as any;
+        const userId = session.metadata?.userId;
 
         if (userId) {
-            // Use internal mutation to update the user
-            // Note: In a real app, you'd use an internal mutation
-            // We need to define it in users.ts or here.
-            // I'll define a fulfillment mutation below.
+            await ctx.runMutation(internal.users.fulfillPurchase, {
+                userId: userId as any
+            });
         }
     }
 
