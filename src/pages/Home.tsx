@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Gamepad2, Trophy, Users, Zap, Star, Flame, Clock } from 'lucide-react';
+import { Gamepad2, Trophy, Flame, Users, Zap, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const fadeIn = {
@@ -14,54 +14,62 @@ const stagger = {
 
 export default function Home() {
     return (
-        <div className="flex flex-col gap-16 pb-20">
-            {/* Animated Background Element */}
-            <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-                <div className="perspective-grid" />
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-600/20 blur-[150px] rounded-full mix-blend-screen animate-pulse" />
-                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-600/10 blur-[150px] rounded-full mix-blend-screen" />
-            </div>
-
-            {/* Hero Section */}
+        <div className="flex flex-col gap-24 px-6 md:px-12 max-w-7xl mx-auto">
+            {/* Cinematic Hero */}
             <motion.section
                 initial="hidden"
                 animate="show"
                 variants={stagger}
-                className="relative flex flex-col items-center justify-center py-20 text-center"
+                className="relative pt-20 pb-12 flex flex-col items-center text-center overflow-hidden"
             >
-                <motion.div variants={fadeIn} className="relative inline-block mb-4">
-                    <span className="absolute -inset-1 rounded-full blur-md bg-gradient-to-r from-pink-500 to-cyan-500 opacity-75 animate-pulse"></span>
-                    <span className="relative px-4 py-1.5 rounded-full bg-black border border-white/10 text-xs font-bold uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-cyan-400">
-                        Season 1 Live
-                    </span>
+                <motion.div variants={fadeIn} className="relative z-10 flex flex-col items-center">
+                    <div className="mb-6 px-4 py-1 glass rounded-full flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                        <span className="text-[10px] font-black uppercase tracking-widest text-cyan-400">Live Global Tournament</span>
+                    </div>
+
+                    <h1 className="text-8xl md:text-[12rem] font-black tracking-tighter leading-none mb-4 italic select-none">
+                        <span className="relative inline-block text-white">
+                            NEXT
+                            <span className="absolute -inset-2 bg-white/5 blur-3xl rounded-full -z-10" />
+                        </span>
+                        <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-b from-cyan-400 to-blue-600 drop-shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+                            LEVEL
+                        </span>
+                    </h1>
+
+                    <p className="max-w-xl text-slate-400 text-lg md:text-xl font-medium leading-relaxed mb-12">
+                        Escape reality in our immersive arcade metaverse. Compete for glory, earn rewards, and dominate the leaderboard.
+                    </p>
+
+                    <div className="flex flex-wrap justify-center gap-6">
+                        <Link to="/game/tetris">
+                            <button className="px-10 py-5 bg-white text-black font-black rounded-2xl hover:bg-cyan-400 transition-all hover:scale-105 shadow-[0_20px_40px_rgba(255,255,255,0.1)] group overflow-hidden relative">
+                                <span className="relative z-10">START MISSION</span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                            </button>
+                        </Link>
+                        <button className="px-10 py-5 glass rounded-2xl font-black text-white hover:bg-white/10 transition-all flex items-center gap-3">
+                            <Trophy size={18} className="text-yellow-500" />
+                            HALL OF FAME
+                        </button>
+                    </div>
                 </motion.div>
 
-                <motion.h1 variants={fadeIn} className="text-7xl md:text-9xl font-black mb-6 tracking-tighter mix-blend-overlay">
-                    <span className="bg-gradient-to-b from-white via-white to-transparent bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-                        ARCADE
-                    </span>
-                    <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent ml-2">.IO</span>
-                </motion.h1>
-
-                <motion.p variants={fadeIn} className="text-slate-400 text-xl md:text-2xl font-light tracking-wide max-w-2xl mx-auto mb-10">
-                    Compete globally. Dominate the leaderboards. Experience the next evolution of retro gaming.
-                </motion.p>
-
-                <motion.div variants={fadeIn} className="flex gap-6">
-                    <button className="px-8 py-4 bg-white text-black font-black hover:bg-cyan-400 transition-colors transform hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.3)] rounded-sm clip-path-polygon">
-                        START PLAYING
-                    </button>
-                    <button className="px-8 py-4 border border-white/20 hover:border-white hover:bg-white/5 transition-all font-bold tracking-widest rounded-sm">
-                        VIEW RANKINGS
-                    </button>
-                </motion.div>
+                {/* Decorative Elements */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/10 blur-[150px] rounded-full -z-10 animate-pulse" />
             </motion.section>
 
-            {/* Featured Games Grid */}
-            <section className="px-4 max-w-7xl mx-auto w-full">
-                <div className="flex items-center gap-4 mb-8">
-                    <Flame className="text-orange-500 animate-bounce" size={28} />
-                    <h2 className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">Trending Now</h2>
+            {/* Hyper-Interactive Game Grid */}
+            <section>
+                <div className="flex items-center justify-between mb-12">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 glass rounded-2xl flex items-center justify-center">
+                            <Flame className="text-orange-500" size={24} />
+                        </div>
+                        <h2 className="text-4xl font-black tracking-tighter uppercase italic">Trending Missions</h2>
+                    </div>
                 </div>
 
                 <motion.div
@@ -69,92 +77,93 @@ export default function Home() {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true }}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-6"
+                    className="grid grid-cols-1 md:grid-cols-12 gap-6"
                 >
-                    {/* Tetris Card */}
-                    <Link to="/game/tetris" className="md:col-span-2 group">
+                    {/* Featured Game: Tetris */}
+                    <Link to="/game/tetris" className="md:col-span-8 group">
                         <motion.div
                             variants={fadeIn}
-                            whileHover={{ scale: 1.02 }}
-                            className="h-full bg-gradient-to-br from-purple-900/40 to-slate-900 border border-purple-500/30 p-8 rounded-3xl relative overflow-hidden backdrop-blur-md group-hover:border-purple-400/60 transition-colors"
+                            className="relative h-[450px] rounded-[2.5rem] overflow-hidden border border-white/5 bg-slate-900 shadow-2xl transition-all group-hover:border-purple-500/50"
                         >
-                            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
-                            <div className="absolute top-0 right-0 p-4 opacity-50 group-hover:opacity-80 transition-opacity">
-                                <Gamepad2 size={180} className="text-purple-500 rotate-12" />
+                            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/60 via-slate-900 to-slate-900" />
+                            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
+
+                            <div className="absolute -right-20 -bottom-20 opacity-20 group-hover:opacity-40 transition-opacity group-hover:scale-110 duration-700">
+                                <Gamepad2 size={400} className="text-purple-500 rotate-12" />
                             </div>
 
-                            <div className="relative z-10 flex flex-col h-full justify-between">
+                            <div className="relative z-10 p-12 h-full flex flex-col justify-between">
                                 <div>
-                                    <span className="px-3 py-1 bg-purple-500 text-white text-xs font-bold rounded-full mb-4 inline-block shadow-[0_0_15px_rgba(168,85,247,0.5)]">FEATURED</span>
-                                    <h3 className="text-4xl font-black mb-2 italic">NEON TETRIS</h3>
-                                    <p className="text-purple-200/60 max-w-md text-lg">Master the matrix in this neon-soaked reimagining of the classic block stacker.</p>
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <span className="px-4 py-1 bg-purple-500/20 border border-purple-500/30 text-purple-400 text-[10px] font-black rounded-full uppercase tracking-widest leading-none">Featured Title</span>
+                                        <span className="flex items-center gap-1 text-[10px] font-bold text-slate-500">
+                                            <Users size={12} /> 2.4K ACTIVE
+                                        </span>
+                                    </div>
+                                    <h3 className="text-6xl font-black italic mb-4 tracking-tighter leading-none">NEON<br /><span className="text-white/20 group-hover:text-purple-400 transition-colors">TETRIS</span></h3>
+                                    <p className="max-w-md text-slate-400 font-medium">Experience the classic block stacker with high-end physics and immersive cyber-visuals.</p>
                                 </div>
 
-                                <div className="flex items-center gap-4 mt-8">
-                                    <div className="flex -space-x-2">
-                                        {[1, 2, 3, 4].map(i => (
-                                            <div key={i} className="w-8 h-8 rounded-full bg-slate-700 border-2 border-purple-900 flex items-center justify-center text-[10px] text-white font-bold">
-                                                U{i}
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <span className="text-sm text-purple-300 font-bold">+2.4k playing</span>
-                                </div>
+                                <button className="self-start px-8 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-bold flex items-center gap-2 transition-all">
+                                    LAUNCH NOW <Zap size={16} className="text-purple-400" />
+                                </button>
                             </div>
                         </motion.div>
                     </Link>
 
-                    {/* Coming Soon / Secondary Cards */}
-                    <div className="flex flex-col gap-6">
-                        <motion.div
-                            variants={fadeIn}
-                            whileHover={{ scale: 1.02 }}
-                            className="flex-1 bg-gradient-to-br from-green-900/20 to-slate-900 border border-green-500/20 p-6 rounded-3xl relative overflow-hidden hover:border-green-500/40 transition-colors"
-                        >
-                            <div className="absolute -right-4 -bottom-4 opacity-20">
-                                <Zap size={100} className="text-green-500" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-green-400 mb-1">CYBER SNAKE</h3>
-                            <p className="text-xs text-green-200/50 mb-4">COMING SOON</p>
-                            <div className="w-full bg-slate-800/50 h-1.5 rounded-full overflow-hidden">
-                                <div className="w-3/4 h-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
-                            </div>
-                            <p className="text-right text-[10px] text-green-400 mt-1">75% COMPLETE</p>
-                        </motion.div>
+                    {/* Secondary Games Column */}
+                    <div className="md:col-span-4 flex flex-col gap-6">
+                        <Link to="/game/geometry" className="flex-1 group">
+                            <motion.div
+                                variants={fadeIn}
+                                className="h-full relative rounded-[2.5rem] overflow-hidden border border-white/5 bg-slate-900 shadow-xl transition-all group-hover:border-cyan-500/50"
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/40 to-slate-900" />
+                                <div className="relative z-10 p-8">
+                                    <h3 className="text-3xl font-black italic mb-2 tracking-tighter">NEON DASH</h3>
+                                    <div className="w-12 h-1 bg-cyan-500 mb-6 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                                    <p className="text-sm text-slate-400 leading-relaxed mb-6">Master the rhythm in this high-speed obstacle course.</p>
+                                    <span className="text-[10px] font-black text-cyan-400 uppercase tracking-widest">Interactive Demo</span>
+                                </div>
+                                <Zap size={120} className="absolute -right-4 -bottom-4 text-cyan-500 opacity-10 group-hover:opacity-20 transition-opacity" />
+                            </motion.div>
+                        </Link>
 
                         <motion.div
                             variants={fadeIn}
-                            whileHover={{ scale: 1.02 }}
-                            className="flex-1 bg-gradient-to-br from-blue-900/20 to-slate-900 border border-blue-500/20 p-6 rounded-3xl relative overflow-hidden hover:border-blue-500/40 transition-colors"
+                            className="flex-1 relative rounded-[2.5rem] overflow-hidden border border-white/5 bg-black/40 backdrop-blur-sm p-8 group"
                         >
-                            <div className="absolute -right-4 -bottom-4 opacity-20">
-                                <Star size={100} className="text-blue-500" />
+                            <div className="absolute right-8 top-8 w-12 h-12 bg-orange-500/10 rounded-2xl flex items-center justify-center">
+                                <Star size={24} className="text-orange-500 opacity-50" />
                             </div>
-                            <h3 className="text-2xl font-bold text-blue-400 mb-1">DATA DEFENSE</h3>
-                            <p className="text-xs text-blue-200/50 mb-4">EARLY ACCESS</p>
-                            <button className="px-4 py-2 bg-blue-500/10 text-blue-400 border border-blue-500/50 rounded-lg text-xs font-bold w-full hover:bg-blue-500 hover:text-white transition-all">
-                                JOIN WAITLIST
-                            </button>
+                            <h3 className="text-2xl font-black italic text-slate-500">MORE COMING</h3>
+                            <p className="text-xs text-slate-600 mt-2">New world unlocking in 4 days</p>
+                            <div className="mt-8 h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                                <motion.div
+                                    initial={{ x: '-100%' }}
+                                    animate={{ x: '0%' }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                    className="h-full w-1/3 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"
+                                />
+                            </div>
                         </motion.div>
                     </div>
                 </motion.div>
             </section>
 
-            {/* Live Sidebar / Stats Strip */}
-            <section className="px-4 max-w-7xl mx-auto w-full">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {/* Live Data Strip */}
+            <section className="pb-12">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {[
-                        { label: "TOTAL PLAYERS", val: "12,403", icon: Users, color: "text-pink-500" },
-                        { label: "GAMES PLAYED", val: "84,921", icon: Gamepad2, color: "text-purple-500" },
-                        { label: "HIGH SCORE", val: "999,999", icon: Trophy, color: "text-yellow-500" },
-                        { label: "SERVER STATUS", val: "ONLINE", icon: Clock, color: "text-green-500" },
+                        { label: "Active Souls", val: "12,403", color: "from-cyan-500 to-blue-600" },
+                        { label: "Missions Run", val: "84,921", color: "from-purple-500 to-pink-600" },
+                        { label: "Apex Score", val: "999,999", color: "from-yellow-500 to-orange-600" },
+                        { label: "Status", val: "OPERATIONAL", color: "from-green-500 to-emerald-600" },
                     ].map((stat, i) => (
-                        <div key={i} className="bg-white/5 border border-white/5 p-4 rounded-xl flex items-center justify-between backdrop-blur-sm hover:bg-white/10 transition-colors">
-                            <div>
-                                <p className="text-[10px] text-slate-400 font-bold tracking-widest">{stat.label}</p>
-                                <p className={`text-2xl font-black ${stat.color} font-mono mt-1`}>{stat.val}</p>
-                            </div>
-                            <stat.icon size={24} className={`${stat.color} opacity-50`} />
+                        <div key={i} className="glass rounded-3xl p-6 relative overflow-hidden group hover:scale-105 transition-transform cursor-default">
+                            <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${stat.color} opacity-30`} />
+                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{stat.label}</p>
+                            <p className="text-3xl font-black tracking-tighter italic">{stat.val}</p>
                         </div>
                     ))}
                 </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useMutation } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import { useNavigate } from 'react-router-dom';
@@ -39,60 +40,71 @@ export default function Auth() {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-[60vh]">
-            <div className="w-full max-w-md bg-slate-800/50 p-8 rounded-2xl border border-slate-700 shadow-xl backdrop-blur-sm">
-                <h2 className="text-3xl font-black text-center mb-8 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-                    {isLogin ? 'WELCOME BACK' : 'JOIN THE ARCADE'}
+        <div className="flex justify-center items-center py-20">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="w-full max-w-md glass p-10 rounded-[2.5rem] relative overflow-hidden"
+            >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 blur-3xl -z-10" />
+
+                <h2 className="text-4xl font-black text-center mb-2 italic tracking-tighter text-white">
+                    {isLogin ? 'RESUME' : 'INITIATE'}
                 </h2>
+                <p className="text-center text-slate-500 text-xs font-bold tracking-widest uppercase mb-10">
+                    {isLogin ? 'Access your mission profile' : 'Create your pilot identity'}
+                </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-medium text-slate-400 mb-2">Username</label>
                         <input
                             type="text"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            className="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
-                            placeholder="Player1"
+                            className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-slate-700 font-bold"
+                            placeholder="OPERATOR NAME"
                             required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-400 mb-2">Password</label>
                         <input
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
-                            placeholder="••••••••"
+                            className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-slate-700 font-bold"
+                            placeholder="ACCESS CODE"
                             required
                         />
                     </div>
 
                     {error && (
-                        <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm text-center">
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-[10px] font-black uppercase text-center tracking-widest"
+                        >
                             {error}
-                        </div>
+                        </motion.div>
                     )}
 
                     <button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-3 rounded-lg shadow-lg transform transition-all hover:scale-[1.02] active:scale-[0.98]"
+                        className="w-full bg-white text-black font-black py-4 rounded-2xl shadow-xl hover:bg-cyan-400 transition-all hover:scale-[1.02] active:scale-[0.98]"
                     >
-                        {isLogin ? 'LOGIN' : 'CREATE ACCOUNT'}
+                        {isLogin ? 'AUTHENTICATE' : 'REGISTER PROFILE'}
                     </button>
                 </form>
 
-                <div className="mt-6 text-center">
+                <div className="mt-8 text-center">
                     <button
                         onClick={() => setIsLogin(!isLogin)}
-                        className="text-slate-400 hover:text-white text-sm transition-colors"
+                        className="text-slate-500 hover:text-cyan-400 text-[10px] font-black uppercase tracking-widest transition-colors"
                     >
-                        {isLogin ? "Don't have an account? Sign up" : "Already have an account? Login"}
+                        {isLogin ? "New Pilot? Sign up" : "Existing Operator? Login"}
                     </button>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 }
