@@ -47,7 +47,7 @@ export default function TetrisGame() {
     // Game State Refs (for animation loop)
     const boardRef = useRef(Array.from({ length: ROWS }, () => Array(COLS).fill(0)));
     const pieceRef = useRef<{ x: number; y: number; shape: number[][]; color: number } | null>(null);
-    const requestRef = useRef<number>();
+    const requestRef = useRef<number | undefined>(undefined);
     const lastTimeRef = useRef<number>(0);
     const dropCounterRef = useRef<number>(0);
     const dropIntervalRef = useRef<number>(1000);
