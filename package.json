@@ -11,13 +11,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^8.6.0",
     "@tailwindcss/vite": "^4.1.18",
     "convex": "^1.31.2",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.11.0"
+    "react-router-dom": "^7.11.0",
+    "stripe": "^20.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

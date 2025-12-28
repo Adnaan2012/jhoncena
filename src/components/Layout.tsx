@@ -1,20 +1,35 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
-// Note: keeping the local useAuth for now as I can't see the file structure fully to know if I made a hook file.
-// Wait, I defined useAuth INSIDE Layout.tsx previously. I should probably move it or just keep it there.
-// Let's refactor proper.
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gamepad2, LogOut, User } from 'lucide-react';
+import { Gamepad2, LogOut, User, Zap, Crown } from 'lucide-react';
+import { useAction, useQuery } from 'convex/react';
+import { api } from '../../convex/_generated/api';
+import { Id } from '../../convex/_generated/dataModel';
 
 export const useAuth = () => {
-    const [userId] = useState<string | null>(localStorage.getItem("userId"));
+    const [userId] = useState<Id<"users"> | null>(localStorage.getItem("userId") as Id<"users"> | null);
     return userId;
 }
 
 export default function Layout() {
     const userId = useAuth();
     const location = useLocation();
+    const user = useQuery(api.users.getUser, userId ? { userId } : "skip");
+    const createCheckout = useAction(api.stripe.createCheckoutSession);
+    const [isUpgrading, setIsUpgrading] = useState(false);
+
+    const handleUpgrade = async () => {
+        if (!userId) return;
+        setIsUpgrading(true);
+        try {
+            const url = await createCheckout({ userId });
+            if (url) window.location.href = url;
+        } catch (err) {
+            console.error(err);
+            alert("Failed to start checkout. Check console.");
+        } finally {
+            setIsUpgrading(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-[#050508] text-slate-200 font-sans selection:bg-cyan-500 selection:text-white">
@@ -45,11 +60,28 @@ export default function Layout() {
 
                     {userId ? (
                         <div className="flex items-center gap-4 pl-8 border-l border-white/10 ml-4">
+                            {!user?.isPremium && (
+                                <button
+                                    onClick={handleUpgrade}
+                                    disabled={isUpgrading}
+                                    className="px-4 py-2 glass rounded-xl text-[10px] font-black text-yellow-500 border-yellow-500/20 hover:bg-yellow-500/10 transition-all flex items-center gap-2 animate-pulse"
+                                >
+                                    <Crown size={12} />
+                                    {isUpgrading ? "LOADING..." : "UPGRADE"}
+                                </button>
+                            )}
                             <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
-                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-700 to-slate-900 border border-white/10 flex items-center justify-center">
+                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-700 to-slate-900 border border-white/10 flex items-center justify-center relative">
                                     <User size={14} />
+                                    {user?.isPremium && (
+                                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-500 rounded-full border-2 border-[#050508] flex items-center justify-center">
+                                            <Crown size={6} className="text-black" />
+                                        </div>
+                                    )}
                                 </div>
-                                <span className="hidden md:block uppercase tracking-tighter">{localStorage.getItem('username')}</span>
+                                <span className={`${user?.isPremium ? 'text-yellow-500' : ''} hidden md:block uppercase tracking-tighter`}>
+                                    {user?.username || localStorage.getItem('username')}
+                                </span>
                             </div>
                             <button
                                 onClick={() => { localStorage.removeItem("userId"); window.location.reload(); }}

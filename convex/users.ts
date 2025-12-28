@@ -17,9 +17,17 @@ export const signup = mutation({
             username: args.username,
             password: args.password,
             createdAt: Date.now(),
+            isPremium: false,
         });
 
         return userId;
+    },
+});
+
+export const getUser = query({
+    args: { userId: v.id("users") },
+    handler: async (ctx, args) => {
+        return await ctx.db.get(args.userId);
     },
 });
 
