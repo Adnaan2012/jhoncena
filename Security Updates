@@ -1,0 +1,11 @@
+.github/dependabot.yml
+
+version: 2
+updates:
+  # This covers both your JavaScript and TypeScript libraries
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # This ensures you aren't overwhelmed with too many open requests at once
+    open-pull-requests-limit: 5
